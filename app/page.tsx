@@ -1,3 +1,5 @@
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import Image from "next/image";
 
 export default function Home() {
@@ -10,7 +12,22 @@ export default function Home() {
         width={1920}
         height={300}
       />
-      <div className="max-w-7xl mx-auto p-2">Main App</div>
+      <div className="bg-neutral-100 py-3">
+        <div className="flex w-full justify-center items-center space-x-1 p-2">
+          <Input
+            className="max-w-sm bg-neutral-50"
+            type="text"
+            placeholder="Search city"
+          />
+          <Button
+            className="cursor-pointer bg-neutral-300 text-neutral-800"
+            variant="outline"
+            type="submit"
+          >
+            Search
+          </Button>
+        </div>
+      </div>
     </div>
   );
 }
