@@ -4,6 +4,7 @@ import { useState } from "react";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import axios, { AxiosError } from "axios";
+import { toast } from "sonner";
 
 export default function Search() {
   const [city, setCity] = useState("");
@@ -22,11 +23,12 @@ export default function Search() {
       );
 
       setWeatherData(weatherResponse.data);
+      toast.success("Success to get data!");
       console.log("Weather DATA:", weatherData);
     } catch (error) {
       if (error instanceof AxiosError) {
         console.log("getCity ERROR:", error.message);
-        // toast({ title: `Ошибка! ${error.response?.data.detail}` });
+        toast.error("Error to get data!");
       }
     } finally {
       setCity("");
