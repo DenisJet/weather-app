@@ -21,26 +21,30 @@ import { setOptionMark } from "@/app/helpers/setOptionMark";
 import { setChartData } from "@/app/helpers/setChartData";
 
 type ChartProps = {
-  weatherResponse: WeatherResponse;
+  value_1: WeatherResponse;
+  value_2: WeatherResponse | null;
   selectedOption: SelectedOptions;
   selectedPeriod: SelectedPeriod;
 };
 
 export default function ChartComponent({
-  weatherResponse,
+  value_1,
+  value_2,
   selectedOption,
   selectedPeriod,
 }: ChartProps) {
-  const { city, list } = weatherResponse;
+  const { city: city_1, list: list_1 } = value_1;
+  const city_2 = value_2 ? value_2.city : null;
+  const list_2 = value_2 ? value_2.list : null;
 
   const chartConfig = {
-    value: {
-      label: `${selectedOption}  ${setOptionMark(selectedOption)}`,
-      color: "#2563eb",
+    value_1: {
+      label: `${city_1.name}  ${setOptionMark(selectedOption)}`,
+      color: "var(--chart-1)",
     },
-    mobile: {
-      label: "Mobile",
-      color: "#60a5fa",
+    value_2: {
+      label: `${city_2?.name}  ${setOptionMark(selectedOption)}`,
+      color: "var(--chart-2)",
     },
   } satisfies ChartConfig;
 
@@ -54,20 +58,30 @@ export default function ChartComponent({
               {selectedOption}
             </span>{" "}
             chart forecast for{" "}
-            <span className="underline  decoration-solid">{city.name}</span>
+            <span className="underline  decoration-solid">{city_1.name}</span>
           </div>
+          {city_2 && (
+            <span className="underline  decoration-solid">
+              compare with {city_2.name}
+            </span>
+          )}
           <span>Interval {selectedPeriod}</span>
         </CardTitle>
         <CardDescription>
-          {list[0].dt_txt.slice(0, 10).replace(/-/g, ".")} -{" "}
-          {list[32].dt_txt.slice(0, 10).replace(/-/g, ".")}
+          {list_1[0].dt_txt.slice(0, 10).replace(/-/g, ".")} -{" "}
+          {list_1[32].dt_txt.slice(0, 10).replace(/-/g, ".")}
         </CardDescription>
       </CardHeader>
       <CardContent>
         <ChartContainer config={chartConfig}>
           <LineChart
             accessibilityLayer
-            data={setChartData(list, selectedOption, selectedPeriod)}
+            data={setChartData(
+              list_1,
+              selectedOption,
+              selectedPeriod,
+              list_2 || [],
+            )}
             margin={{
               left: 20,
               right: 20,
@@ -83,19 +97,19 @@ export default function ChartComponent({
             />
             <ChartTooltip content={<ChartTooltipContent />} />
             <Line
-              dataKey="value"
+              dataKey="value_1"
               type="monotone"
-              stroke="var(--color-value)"
+              stroke="var(--color-value_1)"
               strokeWidth={2}
-              dot={false}
             />
-            {/* <Line
-              dataKey="mobile"
-              type="monotone"
-              stroke="var(--color-mobile)"
-              strokeWidth={2}
-              dot={false}
-            /> */}
+            {value_2 && (
+              <Line
+                dataKey="value_2"
+                type="monotone"
+                stroke="var(--color-value_2)"
+                strokeWidth={2}
+              />
+            )}
           </LineChart>
         </ChartContainer>
       </CardContent>

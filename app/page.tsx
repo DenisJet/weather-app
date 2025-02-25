@@ -7,12 +7,14 @@ import { useState } from "react";
 import { WeatherResponse } from "./interfaces/weatherResponse.interface";
 import ListComponent from "../components/ListComponent/ListComponent";
 import SelectOptions from "@/components/SelectOptions/SelectOptions";
+import CompareModal from "@/components/CompareModal/CompareModal";
 
 export type SelectedOptions = "temp" | "humidity" | "pressure";
 export type SelectedPeriod = "1 day" | "3 hours";
 
 export default function Home() {
-  const [data, setData] = useState<WeatherResponse | null>(null);
+  const [data_1, setData_1] = useState<WeatherResponse | null>(null);
+  const [data_2, setData_2] = useState<WeatherResponse | null>(null);
   const [selectedOption, setSelectedOption] = useState<SelectedOptions>("temp");
   const [selectedPeriod, setSelectedPeriod] = useState<SelectedPeriod>("1 day");
 
@@ -25,23 +27,27 @@ export default function Home() {
         width={1920}
         height={300}
       />
-      <Search setWeatherData={setData} />
-      <SelectOptions
-        isDisabled={data === null}
-        selectedOption={selectedOption}
-        setSelectedOption={setSelectedOption}
-        selectedPeriod={selectedPeriod}
-        setSelectedPeriod={setSelectedPeriod}
-      />
-      {data && (
+      <Search setData_1={setData_1} setData_2={setData_2} />
+      <div className="flex w-full justify-center items-center bg-neutral-100">
+        <SelectOptions
+          isDisabled={data_1 === null}
+          selectedOption={selectedOption}
+          setSelectedOption={setSelectedOption}
+          selectedPeriod={selectedPeriod}
+          setSelectedPeriod={setSelectedPeriod}
+        />
+        <CompareModal isDisabled={data_1 === null} setData2={setData_2} />
+      </div>
+      {data_1 && (
         <div className="flex flex-col gap-2 max-w-7xl mx-auto p-2">
           <ChartComponent
-            weatherResponse={data}
+            value_1={data_1}
+            value_2={data_2 ? data_2 : null}
             selectedOption={selectedOption}
             selectedPeriod={selectedPeriod}
           />
           <ListComponent
-            weatherResponse={data}
+            weatherResponse={data_1}
             selectedOption={selectedOption}
             selectedPeriod={selectedPeriod}
           />

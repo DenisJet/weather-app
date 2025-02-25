@@ -2,36 +2,37 @@ import { WeatherData } from "../interfaces/weatherData.interface";
 import { SelectedOptions, SelectedPeriod } from "../page";
 
 export const setChartData = (
-  list: WeatherData[],
+  list_1: WeatherData[],
   option: SelectedOptions,
   period: SelectedPeriod,
+  list_2?: WeatherData[],
 ) => {
   if (period === "1 day") {
     return [
       {
-        time: list[0].dt_txt.replace(/-/g, "."),
-        value: list[0].main[option],
-        mobile: 80,
+        time: list_1[0].dt_txt.replace(/-/g, "."),
+        value_1: list_1[0].main[option],
+        value_2: list_2 ? list_2[0]?.main[option] : null,
       },
       {
-        time: list[8].dt_txt.replace(/-/g, "."),
-        value: list[8].main[option],
-        mobile: 200,
+        time: list_1[8].dt_txt.replace(/-/g, "."),
+        value_1: list_1[8].main[option],
+        value_2: list_2 ? list_2[8]?.main[option] : null,
       },
       {
-        time: list[16].dt_txt.replace(/-/g, "."),
-        value: list[16].main[option],
-        mobile: 120,
+        time: list_1[16].dt_txt.replace(/-/g, "."),
+        value_1: list_1[16].main[option],
+        value_2: list_2 ? list_2[16]?.main[option] : null,
       },
       {
-        time: list[24].dt_txt.replace(/-/g, "."),
-        value: list[24].main[option],
-        mobile: 190,
+        time: list_1[24].dt_txt.replace(/-/g, "."),
+        value_1: list_1[24].main[option],
+        value_2: list_2 ? list_2[24]?.main[option] : null,
       },
       {
-        time: list[32].dt_txt.replace(/-/g, "."),
-        value: list[32].main[option],
-        mobile: 130,
+        time: list_1[32].dt_txt.replace(/-/g, "."),
+        value_1: list_1[32].main[option],
+        value_2: list_2 ? list_2[32]?.main[option] : null,
       },
     ];
   }
@@ -39,16 +40,23 @@ export const setChartData = (
   if (period === "3 hours") {
     const chartData: {
       time: string;
-      value: number;
+      value_1: number;
+      value_2?: number;
     }[] = [];
 
-    list.forEach((item) => {
+    list_1.forEach((item) => {
       const dataItem = {
         time: item.dt_txt.replace(/-/g, "."),
-        value: item.main[option],
+        value_1: item.main[option],
       };
       chartData.push(dataItem);
     });
+
+    if (list_2 && list_2.length) {
+      list_2.forEach((item, index) => {
+        chartData[index].value_2 = item.main[option];
+      });
+    }
 
     return chartData;
   }

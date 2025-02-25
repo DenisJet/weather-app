@@ -8,16 +8,18 @@ import { WeatherResponse } from "@/app/interfaces/weatherResponse.interface";
 import { getCityData } from "@/app/api/api.actions";
 
 export default function Search({
-  setWeatherData,
+  setData_1,
+  setData_2,
 }: {
-  setWeatherData: (data: WeatherResponse | null) => void;
+  setData_1: (data: WeatherResponse | null) => void;
+  setData_2?: (data: WeatherResponse | null) => void;
 }) {
   const [city, setCity] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
   const handleSearch = async () => {
     setIsLoading(true);
-    await getCityData(city, setWeatherData); // Call the function here
+    await getCityData(city, setData_1, setData_2);
     setCity("");
     setIsLoading(false);
   };

@@ -4,7 +4,8 @@ import { WeatherResponse } from "@/app/interfaces/weatherResponse.interface";
 
 export const getCityData = async (
   city: string,
-  setWeatherData: (data: WeatherResponse | null) => void,
+  setData_1: (data: WeatherResponse | null) => void,
+  setData_2?: (data: WeatherResponse | null) => void,
 ) => {
   try {
     const geoResponse = await axios.get(
@@ -18,16 +19,20 @@ export const getCityData = async (
         `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=3076f9ecff1701796103bce3ae8ce27c&units=metric`,
       );
 
-      setWeatherData(weatherResponse.data);
+      setData_1(weatherResponse.data);
+      if (setData_2) setData_2(null);
       toast.success("Success to get data!");
     } else {
       toast.error("No city found!");
-      setWeatherData(null);
+      setData_1(null);
+      if (setData_2) setData_2(null);
     }
   } catch (error) {
     if (error instanceof AxiosError) {
       console.error("getCity ERROR:", error.message);
       toast.error("Error to get data!");
+      setData_1(null);
+      if (setData_2) setData_2(null);
     }
   }
 };
