@@ -8,6 +8,7 @@ import {
 } from "../ui/card";
 import { SelectedOptions, SelectedPeriod } from "@/app/page";
 import { setChartData } from "@/app/helpers/setChartData";
+import { setOptionMark } from "@/app/helpers/setOptionMark";
 
 type TempListProps = {
   weatherResponse: WeatherResponse;
@@ -42,9 +43,11 @@ export default function TempList({
         {data &&
           data.map((item) => {
             return (
-              <div key={item.day} className="flex gap-2 justify-between">
-                <span>{item.day}</span>
-                <span>{item.value}</span>
+              <div key={item.time} className="flex gap-2 justify-between">
+                <span>{item.time}</span>
+                <span>
+                  {item.value} {setOptionMark(selectedOption)}
+                </span>
               </div>
             );
           })}
