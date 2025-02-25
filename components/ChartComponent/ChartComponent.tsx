@@ -17,28 +17,29 @@ import {
 } from "@/components/ui/chart";
 import { WeatherResponse } from "@/app/interfaces/weatherResponse.interface";
 import { SelectedOptions } from "@/app/page";
+import { setOptionMark } from "@/app/helpers/setOptionMark";
 
 type ChartProps = {
   weatherResponse: WeatherResponse;
   selectedOption: SelectedOptions;
 };
 
-const chartConfig = {
-  value: {
-    label: "Temp ℃",
-    color: "#2563eb",
-  },
-  mobile: {
-    label: "Mobile",
-    color: "#60a5fa",
-  },
-} satisfies ChartConfig;
-
 export default function ChartComponent({
   weatherResponse,
   selectedOption,
 }: ChartProps) {
   const { city, list } = weatherResponse;
+
+  const chartConfig = {
+    value: {
+      label: `${selectedOption}  ${setOptionMark(selectedOption)}`,
+      color: "#2563eb",
+    },
+    mobile: {
+      label: "Mobile",
+      color: "#60a5fa",
+    },
+  } satisfies ChartConfig;
 
   const chartData = [
     {
@@ -91,7 +92,7 @@ export default function ChartComponent({
               right: 16,
             }}
           >
-            <CartesianGrid vertical={false} />
+            <CartesianGrid />
             <XAxis
               dataKey="day"
               tickLine={false}
@@ -99,7 +100,7 @@ export default function ChartComponent({
               tickMargin={8}
               tickFormatter={(value) => value.slice(5, 10)}
             />
-            <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
+            <ChartTooltip content={<ChartTooltipContent />} />
             <Line
               dataKey="value"
               type="monotone"

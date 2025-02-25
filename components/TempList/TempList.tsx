@@ -7,6 +7,7 @@ import {
   CardContent,
 } from "../ui/card";
 import { SelectedOptions } from "@/app/page";
+import { setOptionMark } from "@/app/helpers/setOptionMark";
 
 type TempListProps = {
   weatherResponse: WeatherResponse;
@@ -18,12 +19,6 @@ export default function TempList({
   selectedOption,
 }: TempListProps) {
   const { city, list } = weatherResponse;
-  const optionMark =
-    selectedOption === "temp"
-      ? "℃"
-      : selectedOption === "humidity"
-      ? "%"
-      : "hPa";
 
   return (
     <Card className="max-w-[500px] w-full m-auto mt-4">
@@ -51,7 +46,7 @@ export default function TempList({
               <div key={item.dt} className="flex gap-2 justify-between">
                 <span>{item.dt_txt.slice(0, 10).replace(/-/g, ".")}</span>
                 <span>
-                  {item.main[selectedOption]} {optionMark}
+                  {item.main[selectedOption]} {setOptionMark(selectedOption)}
                 </span>
               </div>
             );
