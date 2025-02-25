@@ -15,13 +15,7 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
-import { WeatherData } from "@/app/interfaces/weatherData.interface";
-import { CityData } from "@/app/interfaces/cityData.interface";
-
-type ChartComponentProps = {
-  city: CityData;
-  data: WeatherData[];
-};
+import { WeatherResponse } from "@/app/interfaces/weatherResponse.interface";
 
 const chartConfig = {
   temp: {
@@ -34,42 +28,42 @@ const chartConfig = {
   },
 } satisfies ChartConfig;
 
-export default function ChartComponent({ city, data }: ChartComponentProps) {
+export default function ChartComponent({ city, list }: WeatherResponse) {
   const chartData = [
     {
-      day: data[0].dt_txt.replace(/-/g, "."),
-      temp: data[0].main.temp,
+      day: list[0].dt_txt.replace(/-/g, "."),
+      temp: list[0].main.temp,
       mobile: 80,
     },
     {
-      day: data[8].dt_txt.replace(/-/g, "."),
-      temp: data[8].main.temp,
+      day: list[8].dt_txt.replace(/-/g, "."),
+      temp: list[8].main.temp,
       mobile: 200,
     },
     {
-      day: data[16].dt_txt.replace(/-/g, "."),
-      temp: data[16].main.temp,
+      day: list[16].dt_txt.replace(/-/g, "."),
+      temp: list[16].main.temp,
       mobile: 120,
     },
     {
-      day: data[24].dt_txt.replace(/-/g, "."),
-      temp: data[24].main.temp,
+      day: list[24].dt_txt.replace(/-/g, "."),
+      temp: list[24].main.temp,
       mobile: 190,
     },
     {
-      day: data[32].dt_txt.replace(/-/g, "."),
-      temp: data[32].main.temp,
+      day: list[32].dt_txt.replace(/-/g, "."),
+      temp: list[32].main.temp,
       mobile: 130,
     },
   ];
 
   return (
-    <Card className="max-w-[500px] m-auto mt-4">
+    <Card className="max-w-[500px] w-full m-auto mt-4">
       <CardHeader>
-        <CardTitle>5 day forecast for {city.name}</CardTitle>
+        <CardTitle>5 day chart forecast for {city.name}</CardTitle>
         <CardDescription>
-          {data[0].dt_txt.slice(0, 10).replace(/-/g, ".")} -{" "}
-          {data[32].dt_txt.slice(0, 10).replace(/-/g, ".")}
+          {list[0].dt_txt.slice(0, 10).replace(/-/g, ".")} -{" "}
+          {list[32].dt_txt.slice(0, 10).replace(/-/g, ".")}
         </CardDescription>
       </CardHeader>
       <CardContent>

@@ -5,6 +5,7 @@ import Search from "@/components/Search/Search";
 import Image from "next/image";
 import { useState } from "react";
 import { WeatherResponse } from "./interfaces/weatherResponse.interface";
+import TempList from "../components/TempList/TempList";
 
 export default function Home() {
   const [data, setData] = useState<WeatherResponse | null>(null);
@@ -21,7 +22,12 @@ export default function Home() {
         height={300}
       />
       <Search setWeatherData={setData} />
-      {data && <ChartComponent data={data.list} city={data.city} />}
+      {data && (
+        <div className="flex flex-wrap gap-2 max-w-7xl mx-auto p-2">
+          <TempList list={data.list} city={data.city} />
+          <ChartComponent list={data.list} city={data.city} />
+        </div>
+      )}
     </div>
   );
 }
