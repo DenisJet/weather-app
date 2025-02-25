@@ -27,10 +27,9 @@ export default function Search() {
 
       setWeatherData(weatherResponse.data.list);
       toast.success("Success to get data!");
-      console.log("Weather DATA:", weatherData);
     } catch (error) {
       if (error instanceof AxiosError) {
-        console.log("getCity ERROR:", error.message);
+        console.error("getCity ERROR:", error.message);
         toast.error("Error to get data!");
       }
     } finally {
