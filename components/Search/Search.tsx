@@ -6,10 +6,14 @@ import { Input } from "../ui/input";
 import axios, { AxiosError } from "axios";
 import { toast } from "sonner";
 import { Loader } from "lucide-react";
+import { WeatherResponse } from "@/app/interfaces/weatherResponse.interface";
 
-export default function Search() {
+export default function Search({
+  setWeatherData,
+}: {
+  setWeatherData: ({}: WeatherResponse) => void;
+}) {
   const [city, setCity] = useState("");
-  const [weatherData, setWeatherData] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
   const getCityData = async () => {
@@ -25,7 +29,7 @@ export default function Search() {
         `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=3076f9ecff1701796103bce3ae8ce27c&units=metric`,
       );
 
-      setWeatherData(weatherResponse.data.list);
+      setWeatherData(weatherResponse.data);
       toast.success("Success to get data!");
     } catch (error) {
       if (error instanceof AxiosError) {
