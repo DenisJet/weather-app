@@ -20,13 +20,18 @@ export default function Home() {
 
   return (
     <div>
-      <Image
-        className="object-cover h-[300px]"
-        alt=""
-        src="/hero-image.jpeg"
-        width={1920}
-        height={300}
-      />
+      <div className="relative">
+        <h1 className="absolute text-neutral-50 p-4 top-10 left-0 font-semibold text-3xl sm:text-5xl md:left-20">
+          An easy way <br /> to find out the weather forecast
+        </h1>
+        <Image
+          className="object-cover h-[300px]"
+          alt=""
+          src="/hero-image.jpeg"
+          width={1920}
+          height={300}
+        />
+      </div>
       <Search setData_1={setData_1} setData_2={setData_2} />
       <div className="flex flex-wrap w-full justify-center items-center bg-neutral-100 py-3">
         <SelectOptions
