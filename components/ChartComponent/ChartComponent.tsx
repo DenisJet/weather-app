@@ -16,9 +16,15 @@ import {
   ChartTooltipContent,
 } from "@/components/ui/chart";
 import { WeatherResponse } from "@/app/interfaces/weatherResponse.interface";
+import { SelectedOptions } from "@/app/page";
+
+type ChartProps = {
+  weatherResponse: WeatherResponse;
+  selectedOption: SelectedOptions;
+};
 
 const chartConfig = {
-  temp: {
+  value: {
     label: "Temp ℃",
     color: "#2563eb",
   },
@@ -28,31 +34,36 @@ const chartConfig = {
   },
 } satisfies ChartConfig;
 
-export default function ChartComponent({ city, list }: WeatherResponse) {
+export default function ChartComponent({
+  weatherResponse,
+  selectedOption,
+}: ChartProps) {
+  const { city, list } = weatherResponse;
+
   const chartData = [
     {
       day: list[0].dt_txt.replace(/-/g, "."),
-      temp: list[0].main.temp,
+      value: list[0].main[selectedOption],
       mobile: 80,
     },
     {
       day: list[8].dt_txt.replace(/-/g, "."),
-      temp: list[8].main.temp,
+      value: list[8].main[selectedOption],
       mobile: 200,
     },
     {
       day: list[16].dt_txt.replace(/-/g, "."),
-      temp: list[16].main.temp,
+      value: list[16].main[selectedOption],
       mobile: 120,
     },
     {
       day: list[24].dt_txt.replace(/-/g, "."),
-      temp: list[24].main.temp,
+      value: list[24].main[selectedOption],
       mobile: 190,
     },
     {
       day: list[32].dt_txt.replace(/-/g, "."),
-      temp: list[32].main.temp,
+      value: list[32].main[selectedOption],
       mobile: 130,
     },
   ];
@@ -60,7 +71,11 @@ export default function ChartComponent({ city, list }: WeatherResponse) {
   return (
     <Card className="max-w-[500px] w-full m-auto mt-4">
       <CardHeader>
-        <CardTitle>5 day chart forecast for {city.name}</CardTitle>
+        <CardTitle>
+          5 day{" "}
+          <span className="underline  decoration-solid">{selectedOption}</span>{" "}
+          chart forecast for {city.name}
+        </CardTitle>
         <CardDescription>
           {list[0].dt_txt.slice(0, 10).replace(/-/g, ".")} -{" "}
           {list[32].dt_txt.slice(0, 10).replace(/-/g, ".")}
@@ -86,9 +101,9 @@ export default function ChartComponent({ city, list }: WeatherResponse) {
             />
             <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
             <Line
-              dataKey="temp"
+              dataKey="value"
               type="monotone"
-              stroke="var(--color-temp)"
+              stroke="var(--color-value)"
               strokeWidth={2}
               dot={false}
             />
