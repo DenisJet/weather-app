@@ -28,7 +28,7 @@ export default function Home() {
         height={300}
       />
       <Search setData_1={setData_1} setData_2={setData_2} />
-      <div className="flex w-full justify-center items-center bg-neutral-100">
+      <div className="flex flex-wrap w-full justify-center items-center bg-neutral-100 py-3">
         <SelectOptions
           isDisabled={data_1 === null}
           selectedOption={selectedOption}

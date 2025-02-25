@@ -23,8 +23,8 @@ export default function SelectOptions({
   setSelectedPeriod,
 }: SelectOptionsProps) {
   return (
-    <div className="bg-neutral-100 py-3">
-      <div className="flex w-full justify-center items-center space-x-1 p-2">
+    <div className="bg-neutral-100">
+      <div className="flex flex-wrap gap-2 w-full justify-center items-center space-x-1 p-2">
         <Select
           disabled={isDisabled}
           value={selectedOption}
