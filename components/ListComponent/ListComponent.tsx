@@ -26,7 +26,7 @@ export default function ListComponent({
   const data = setChartData(list, selectedOption, selectedPeriod);
 
   return (
-    <Card className="max-w-[500px] w-full m-auto mt-4">
+    <Card className="max-w-[350px] w-full m-auto mt-4 text-sm">
       <CardHeader>
         <CardTitle className="flex flex-wrap gap-1 justify-between">
           <div>
@@ -34,7 +34,7 @@ export default function ListComponent({
             <span className="underline  decoration-solid">
               {selectedOption}
             </span>{" "}
-            chart forecast for{" "}
+            forecast for{" "}
             <span className="underline  decoration-solid">{city.name}</span>
           </div>
           <span>Interval {selectedPeriod}</span>

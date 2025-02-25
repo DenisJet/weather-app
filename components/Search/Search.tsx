@@ -3,10 +3,9 @@
 import { useState } from "react";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
-import axios, { AxiosError } from "axios";
-import { toast } from "sonner";
 import { Loader } from "lucide-react";
 import { WeatherResponse } from "@/app/interfaces/weatherResponse.interface";
+import { getCityData } from "@/app/api/api.actions";
 
 export default function Search({
   setWeatherData,
@@ -16,41 +15,15 @@ export default function Search({
   const [city, setCity] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
-  const getCityData = async () => {
+  const handleSearch = async () => {
     setIsLoading(true);
-
-    try {
-      const geoResponse = await axios.get(
-        `http://api.openweathermap.org/geo/1.0/direct?q=${city}&appid=3076f9ecff1701796103bce3ae8ce27c`,
-      );
-
-      if (geoResponse.data[0]) {
-        const { lat, lon } = geoResponse.data[0];
-
-        const weatherResponse = await axios.get(
-          `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=3076f9ecff1701796103bce3ae8ce27c&units=metric`,
-        );
-
-        setWeatherData(weatherResponse.data);
-        toast.success("Success to get data!");
-      } else {
-        toast.error("No city found!");
-        setWeatherData(null);
-      }
-    } catch (error) {
-      if (error instanceof AxiosError) {
-        console.error("getCity ERROR:", error.message);
-        toast.error("Error to get data!");
-      }
-    } finally {
-      setCity("");
-      setIsLoading(false);
-    }
+    await getCityData(city, setWeatherData); // Call the function here
+    setCity("");
+    setIsLoading(false);
   };
 
   return (
-    <div className="bg-neutral-100 py-3">
-      <p className="text-center text-sm mb-2">Please, enter city name.</p>
+    <div className="bg-neutral-100 pt-4">
       <div className="flex w-full justify-center items-center space-x-1 px-2">
         <Input
           className="max-w-sm bg-neutral-50"
@@ -63,7 +36,7 @@ export default function Search({
         <Button
           className="cursor-pointer bg-neutral-300 text-neutral-800"
           variant="outline"
-          onClick={getCityData}
+          onClick={handleSearch}
           disabled={isLoading || !city.trim()}
         >
           {isLoading ? <Loader /> : "Search"}
