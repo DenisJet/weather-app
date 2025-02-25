@@ -6,7 +6,7 @@ export const setChartData = (
   option: SelectedOptions,
   period: SelectedPeriod,
 ) => {
-  if (period === "day") {
+  if (period === "1 day") {
     return [
       {
         time: list[0].dt_txt.replace(/-/g, "."),

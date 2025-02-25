@@ -54,10 +54,10 @@ export default function SelectOptions({
             <SelectValue />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem defaultChecked value="day">
-              Per day
+            <SelectItem defaultChecked value="1 day">
+              Interval 1 day
             </SelectItem>
-            <SelectItem value="3 hours">Per 3 hours</SelectItem>
+            <SelectItem value="3 hours">Interval 3 hours</SelectItem>
           </SelectContent>
         </Select>
       </div>

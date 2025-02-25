@@ -51,6 +51,7 @@ export default function Search({
           placeholder="Search city"
           value={city}
           onChange={(e) => setCity(e.target.value)}
+          required
         />
         <Button
           className="cursor-pointer bg-neutral-300 text-neutral-800"

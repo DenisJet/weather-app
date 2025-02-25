@@ -45,13 +45,18 @@ export default function ChartComponent({
   } satisfies ChartConfig;
 
   return (
-    <Card className="max-w-[500px] w-full m-auto mt-4">
+    <Card className="max-w-[900px] w-full m-auto mt-4">
       <CardHeader>
-        <CardTitle>
-          5 day{" "}
-          <span className="underline  decoration-solid">{selectedOption}</span>{" "}
-          chart forecast for{" "}
-          <span className="underline  decoration-solid">{city.name}</span>
+        <CardTitle className="flex flex-wrap gap-1 justify-between">
+          <div>
+            5 day{" "}
+            <span className="underline  decoration-solid">
+              {selectedOption}
+            </span>{" "}
+            chart forecast for{" "}
+            <span className="underline  decoration-solid">{city.name}</span>
+          </div>
+          <span>Interval {selectedPeriod}</span>
         </CardTitle>
         <CardDescription>
           {list[0].dt_txt.slice(0, 10).replace(/-/g, ".")} -{" "}
@@ -70,7 +75,7 @@ export default function ChartComponent({
           >
             <CartesianGrid />
             <XAxis
-              dataKey="day"
+              dataKey="time"
               tickLine={false}
               axisLine={false}
               tickMargin={8}

@@ -10,17 +10,17 @@ import { SelectedOptions, SelectedPeriod } from "@/app/page";
 import { setChartData } from "@/app/helpers/setChartData";
 import { setOptionMark } from "@/app/helpers/setOptionMark";
 
-type TempListProps = {
+type ListComponentProps = {
   weatherResponse: WeatherResponse;
   selectedOption: SelectedOptions;
   selectedPeriod: SelectedPeriod;
 };
 
-export default function TempList({
+export default function ListComponent({
   weatherResponse,
   selectedOption,
   selectedPeriod,
-}: TempListProps) {
+}: ListComponentProps) {
   const { city, list } = weatherResponse;
 
   const data = setChartData(list, selectedOption, selectedPeriod);
@@ -28,11 +28,16 @@ export default function TempList({
   return (
     <Card className="max-w-[500px] w-full m-auto mt-4">
       <CardHeader>
-        <CardTitle>
-          5 day{" "}
-          <span className="underline  decoration-solid">{selectedOption}</span>{" "}
-          forecast for{" "}
-          <span className="underline  decoration-solid">{city.name}</span>
+        <CardTitle className="flex flex-wrap gap-1 justify-between">
+          <div>
+            5 day{" "}
+            <span className="underline  decoration-solid">
+              {selectedOption}
+            </span>{" "}
+            chart forecast for{" "}
+            <span className="underline  decoration-solid">{city.name}</span>
+          </div>
+          <span>Interval {selectedPeriod}</span>
         </CardTitle>
         <CardDescription>
           {list[0].dt_txt.slice(0, 10).replace(/-/g, ".")} -{" "}
