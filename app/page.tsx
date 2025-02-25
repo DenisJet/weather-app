@@ -47,7 +47,8 @@ export default function Home() {
             selectedPeriod={selectedPeriod}
           />
           <ListComponent
-            weatherResponse={data_1}
+            value_1={data_1}
+            value_2={data_2 ? data_2 : null}
             selectedOption={selectedOption}
             selectedPeriod={selectedPeriod}
           />
