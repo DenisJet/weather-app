@@ -5,12 +5,15 @@ import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import axios, { AxiosError } from "axios";
 import { toast } from "sonner";
+import { Loader } from "lucide-react";
 
 export default function Search() {
   const [city, setCity] = useState("");
   const [weatherData, setWeatherData] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   const getCityData = async () => {
+    setIsLoading(true);
     try {
       const geoResponse = await axios.get(
         `http://api.openweathermap.org/geo/1.0/direct?q=${city}&appid=3076f9ecff1701796103bce3ae8ce27c`,
@@ -22,7 +25,7 @@ export default function Search() {
         `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=3076f9ecff1701796103bce3ae8ce27c&units=metric`,
       );
 
-      setWeatherData(weatherResponse.data);
+      setWeatherData(weatherResponse.data.list);
       toast.success("Success to get data!");
       console.log("Weather DATA:", weatherData);
     } catch (error) {
@@ -32,6 +35,7 @@ export default function Search() {
       }
     } finally {
       setCity("");
+      setIsLoading(false);
     }
   };
 
@@ -49,8 +53,9 @@ export default function Search() {
           className="cursor-pointer bg-neutral-300 text-neutral-800"
           variant="outline"
           onClick={getCityData}
+          disabled={isLoading}
         >
-          Search
+          {isLoading ? <Loader /> : "Search"}
         </Button>
       </div>
     </div>
