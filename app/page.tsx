@@ -15,10 +15,12 @@ import {
 } from "@/components/ui/select";
 
 export type SelectedOptions = "temp" | "humidity" | "pressure";
+export type SelectedPeriod = "day" | "3 hours";
 
 export default function Home() {
   const [data, setData] = useState<WeatherResponse | null>(null);
   const [selectedOption, setSelectedOption] = useState<SelectedOptions>("temp");
+  const [selectedPeriod, setSelectedPeriod] = useState<SelectedPeriod>("day");
 
   console.log("weatherData", data);
 
@@ -35,6 +37,7 @@ export default function Home() {
       <div className="bg-neutral-100 py-3">
         <div className="flex w-full justify-center items-center space-x-1 p-2">
           <Select
+            disabled={data === null}
             value={selectedOption}
             onValueChange={(value) => {
               setSelectedOption(value as SelectedOptions);
@@ -51,14 +54,36 @@ export default function Home() {
               <SelectItem value="pressure">Pressure</SelectItem>
             </SelectContent>
           </Select>
+          <Select
+            disabled={data === null}
+            value={selectedPeriod}
+            onValueChange={(value) => {
+              setSelectedPeriod(value as SelectedPeriod);
+            }}
+          >
+            <SelectTrigger className="w-[180px] bg-neutral-50">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem defaultChecked value="day">
+                Per day
+              </SelectItem>
+              <SelectItem value="3 hours">Per 3 hours</SelectItem>
+            </SelectContent>
+          </Select>
         </div>
       </div>
       {data && (
         <div className="flex flex-wrap gap-2 max-w-7xl mx-auto p-2">
-          <TempList weatherResponse={data} selectedOption={selectedOption} />
+          <TempList
+            weatherResponse={data}
+            selectedOption={selectedOption}
+            selectedPeriod={selectedPeriod}
+          />
           <ChartComponent
             weatherResponse={data}
             selectedOption={selectedOption}
+            selectedPeriod={selectedPeriod}
           />
         </div>
       )}

@@ -6,19 +6,23 @@ import {
   CardDescription,
   CardContent,
 } from "../ui/card";
-import { SelectedOptions } from "@/app/page";
-import { setOptionMark } from "@/app/helpers/setOptionMark";
+import { SelectedOptions, SelectedPeriod } from "@/app/page";
+import { setChartData } from "@/app/helpers/setChartData";
 
 type TempListProps = {
   weatherResponse: WeatherResponse;
   selectedOption: SelectedOptions;
+  selectedPeriod: SelectedPeriod;
 };
 
 export default function TempList({
   weatherResponse,
   selectedOption,
+  selectedPeriod,
 }: TempListProps) {
   const { city, list } = weatherResponse;
+
+  const data = setChartData(list, selectedOption, selectedPeriod);
 
   return (
     <Card className="max-w-[500px] w-full m-auto mt-4">
@@ -26,7 +30,8 @@ export default function TempList({
         <CardTitle>
           5 day{" "}
           <span className="underline  decoration-solid">{selectedOption}</span>{" "}
-          forecast for {city.name}
+          forecast for{" "}
+          <span className="underline  decoration-solid">{city.name}</span>
         </CardTitle>
         <CardDescription>
           {list[0].dt_txt.slice(0, 10).replace(/-/g, ".")} -{" "}
@@ -34,24 +39,15 @@ export default function TempList({
         </CardDescription>
       </CardHeader>
       <CardContent>
-        {list.map((item, index) => {
-          if (
-            index === 0 ||
-            index === 8 ||
-            index === 16 ||
-            index === 24 ||
-            index === 32
-          ) {
+        {data &&
+          data.map((item) => {
             return (
-              <div key={item.dt} className="flex gap-2 justify-between">
-                <span>{item.dt_txt.slice(0, 10).replace(/-/g, ".")}</span>
-                <span>
-                  {item.main[selectedOption]} {setOptionMark(selectedOption)}
-                </span>
+              <div key={item.day} className="flex gap-2 justify-between">
+                <span>{item.day}</span>
+                <span>{item.value}</span>
               </div>
             );
-          }
-        })}
+          })}
       </CardContent>
     </Card>
   );

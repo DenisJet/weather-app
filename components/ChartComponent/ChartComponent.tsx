@@ -16,17 +16,20 @@ import {
   ChartTooltipContent,
 } from "@/components/ui/chart";
 import { WeatherResponse } from "@/app/interfaces/weatherResponse.interface";
-import { SelectedOptions } from "@/app/page";
+import { SelectedOptions, SelectedPeriod } from "@/app/page";
 import { setOptionMark } from "@/app/helpers/setOptionMark";
+import { setChartData } from "@/app/helpers/setChartData";
 
 type ChartProps = {
   weatherResponse: WeatherResponse;
   selectedOption: SelectedOptions;
+  selectedPeriod: SelectedPeriod;
 };
 
 export default function ChartComponent({
   weatherResponse,
   selectedOption,
+  selectedPeriod,
 }: ChartProps) {
   const { city, list } = weatherResponse;
 
@@ -41,41 +44,14 @@ export default function ChartComponent({
     },
   } satisfies ChartConfig;
 
-  const chartData = [
-    {
-      day: list[0].dt_txt.replace(/-/g, "."),
-      value: list[0].main[selectedOption],
-      mobile: 80,
-    },
-    {
-      day: list[8].dt_txt.replace(/-/g, "."),
-      value: list[8].main[selectedOption],
-      mobile: 200,
-    },
-    {
-      day: list[16].dt_txt.replace(/-/g, "."),
-      value: list[16].main[selectedOption],
-      mobile: 120,
-    },
-    {
-      day: list[24].dt_txt.replace(/-/g, "."),
-      value: list[24].main[selectedOption],
-      mobile: 190,
-    },
-    {
-      day: list[32].dt_txt.replace(/-/g, "."),
-      value: list[32].main[selectedOption],
-      mobile: 130,
-    },
-  ];
-
   return (
     <Card className="max-w-[500px] w-full m-auto mt-4">
       <CardHeader>
         <CardTitle>
           5 day{" "}
           <span className="underline  decoration-solid">{selectedOption}</span>{" "}
-          chart forecast for {city.name}
+          chart forecast for{" "}
+          <span className="underline  decoration-solid">{city.name}</span>
         </CardTitle>
         <CardDescription>
           {list[0].dt_txt.slice(0, 10).replace(/-/g, ".")} -{" "}
@@ -86,10 +62,10 @@ export default function ChartComponent({
         <ChartContainer config={chartConfig}>
           <LineChart
             accessibilityLayer
-            data={chartData}
+            data={setChartData(list, selectedOption, selectedPeriod)}
             margin={{
-              left: 16,
-              right: 16,
+              left: 20,
+              right: 20,
             }}
           >
             <CartesianGrid />
