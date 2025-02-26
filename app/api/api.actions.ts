@@ -9,7 +9,7 @@ export const getCityData = async (
 ) => {
   try {
     const geoResponse = await axios.get(
-      `http://api.openweathermap.org/geo/1.0/direct?q=${city}&appid=${process.env.NEXT_PUBLIC_API_KEY}`,
+      `https://api.openweathermap.org/geo/1.0/direct?q=${city}&appid=${process.env.NEXT_PUBLIC_API_KEY}`,
     );
 
     if (geoResponse.data[0]) {
