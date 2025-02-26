@@ -22,6 +22,11 @@ export default function Search({
     await getCityData(city, setData_1, setData_2);
     setCity("");
     setIsLoading(false);
+
+    const modal = document.querySelector(
+      '[data-state="open"]',
+    ) as HTMLDivElement;
+    if (modal) modal.click();
   };
 
   return (
