@@ -8,6 +8,7 @@ import { WeatherResponse } from "./interfaces/weatherResponse.interface";
 import ListComponent from "../components/ListComponent/ListComponent";
 import SelectOptions from "@/components/SelectOptions/SelectOptions";
 import CompareModal from "@/components/CompareModal/CompareModal";
+import Footer from "@/components/Footer/Footer";
 
 export type SelectedOptions = "temp" | "humidity" | "pressure";
 export type SelectedPeriod = "1 day" | "3 hours";
@@ -59,12 +60,7 @@ export default function Home() {
               selectedPeriod={selectedPeriod}
             />
           </div>
-          <footer className="bg-neutral-800 text-neutral-50">
-            <div className="flex items-center justify-between max-w-7xl mx-auto p-2 py-4">
-              <p className="font-semibold text-lg">Weather App</p>
-              <p>Thanks for use!</p>
-            </div>
-          </footer>
+          <Footer />
         </>
       )}
     </div>
