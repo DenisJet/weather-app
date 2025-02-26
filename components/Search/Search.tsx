@@ -35,7 +35,7 @@ export default function Search({
         <Input
           className="max-w-sm bg-neutral-50"
           type="text"
-          placeholder="Search city"
+          placeholder="Search city (en)"
           value={city}
           onChange={(e) => setCity(e.target.value)}
           required
