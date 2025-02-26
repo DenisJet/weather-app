@@ -57,11 +57,16 @@ export default function ChartComponent({
               {selectedOption}
             </span>{" "}
             chart forecast for{" "}
-            <span className="underline  decoration-solid">{city_1.name}</span>
+            <span className="underline  decoration-solid text-orange-700">
+              {city_1.name}
+            </span>
           </div>
           {city_2 && (
-            <span className="underline  decoration-solid">
-              compare with {city_2.name}
+            <span>
+              compare with{" "}
+              <span className="underline  decoration-solid text-teal-700">
+                {city_2.name}
+              </span>
             </span>
           )}
           <span>Interval {selectedPeriod}</span>

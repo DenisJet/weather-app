@@ -45,7 +45,9 @@ export default function ListComponent({
                 {selectedOption}
               </span>{" "}
               forecast for{" "}
-              <span className="underline  decoration-solid">{city_1.name}</span>
+              <span className="underline  decoration-solid text-orange-700">
+                {city_1.name}
+              </span>
             </div>
             <span>Interval {selectedPeriod}</span>
           </CardTitle>
@@ -78,7 +80,7 @@ export default function ListComponent({
                   {selectedOption}
                 </span>{" "}
                 forecast for{" "}
-                <span className="underline  decoration-solid">
+                <span className="underline  decoration-solid text-teal-700">
                   {city_2?.name}
                 </span>
               </div>
