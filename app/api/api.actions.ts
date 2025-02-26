@@ -9,14 +9,14 @@ export const getCityData = async (
 ) => {
   try {
     const geoResponse = await axios.get(
-      `http://api.openweathermap.org/geo/1.0/direct?q=${city}&appid=3076f9ecff1701796103bce3ae8ce27c`,
+      `http://api.openweathermap.org/geo/1.0/direct?q=${city}&appid=${process.env.NEXT_PUBLIC_API_KEY}`,
     );
 
     if (geoResponse.data[0]) {
       const { lat, lon } = geoResponse.data[0];
 
       const weatherResponse = await axios.get(
-        `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=3076f9ecff1701796103bce3ae8ce27c&units=metric`,
+        `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${process.env.NEXT_PUBLIC_API_KEY}&units=metric`,
       );
 
       setData_1(weatherResponse.data);
