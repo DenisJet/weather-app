@@ -44,20 +44,28 @@ export default function Home() {
         <CompareModal isDisabled={data_1 === null} setData2={setData_2} />
       </div>
       {data_1 && (
-        <div className="flex flex-col gap-2 max-w-7xl mx-auto p-2">
-          <ChartComponent
-            value_1={data_1}
-            value_2={data_2 ? data_2 : null}
-            selectedOption={selectedOption}
-            selectedPeriod={selectedPeriod}
-          />
-          <ListComponent
-            value_1={data_1}
-            value_2={data_2 ? data_2 : null}
-            selectedOption={selectedOption}
-            selectedPeriod={selectedPeriod}
-          />
-        </div>
+        <>
+          <div className="flex flex-col gap-2 max-w-7xl mx-auto p-2 pb-6">
+            <ChartComponent
+              value_1={data_1}
+              value_2={data_2 ? data_2 : null}
+              selectedOption={selectedOption}
+              selectedPeriod={selectedPeriod}
+            />
+            <ListComponent
+              value_1={data_1}
+              value_2={data_2 ? data_2 : null}
+              selectedOption={selectedOption}
+              selectedPeriod={selectedPeriod}
+            />
+          </div>
+          <footer className="bg-neutral-800 text-neutral-50">
+            <div className="flex items-center justify-between max-w-7xl mx-auto p-2 py-4">
+              <p className="font-semibold text-lg">Weather App</p>
+              <p>Thanks for use!</p>
+            </div>
+          </footer>
+        </>
       )}
     </div>
   );
